@@ -16,13 +16,14 @@ const PseudoAxios = () => {
       id: 3,
       name: "後藤",
       age: 23,
-      personalColor: "green",
+      //personalColor: "green",
     },
     {
       id: 4,
       name: "あおたん",
       age: 5,
       personalColor: "lightblue",
+      hobbies: ["anime", "guiter", "alcohole"],
     },
   ];
 };
