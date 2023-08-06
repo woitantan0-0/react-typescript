@@ -1,26 +1,25 @@
-import { useEffect, useState } from "react";
-import ItemList from "./components/ItemList";
-import PseudoAxios from "./components/PseudoAxios";
-import type { Users } from "./types/user";
+import useFetchUsers from "./hooks/useFetchUsers";
 
 const App = () => {
-  const [users, setUsers] = useState<Users[]>([]);
-
-  useEffect(() => {
-    setUsers(PseudoAxios);
-  }, []);
+  // カスタムフック ユーザー情報取得
+  const { userList, isLoading, isError, onClickGetUserButton } =
+    useFetchUsers();
 
   return (
     <div>
-      {users.map((user) => (
-        <ItemList
-          id={user.id}
-          name={user.name}
-          age={user.age}
-          personalColor={user.personalColor}
-          hobbies={user.hobbies}
-        />
-      ))}
+      <button onClick={onClickGetUserButton}>ユーザー取得</button>
+      {/* エラーメッセージ表示 */}
+      {isError && <p style={{ color: "red" }}>エラーが発生しました</p>}
+      {isLoading ? (
+        <p>データ取得中…</p>
+      ) : (
+        userList.map((user) => (
+          <div key={user.id}>
+            {user.id}:{user.name}({user.age})
+            <div>趣味:{user.hobbies?.join(",")}</div>
+          </div>
+        ))
+      )}
     </div>
   );
 };
